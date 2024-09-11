@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.binance'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+//  import
+
+    implementation "io.github.binance:binance-futures-connector-java:3.0.4"
+    implementation 'com.google.code.gson:gson:2.10.1'
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+
+//   import
+}
+
+test {
+    useJUnitPlatform()
+}
