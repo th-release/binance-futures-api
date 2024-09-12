@@ -24,11 +24,28 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-public class Client extends UMFuturesClientImpl {
+public class Client {
     private Gson gson = new Gson();
+    private UMFuturesClientImpl client;
 
     public Client(String apiKey, String secretKey) {
-        super(apiKey, secretKey);
+        client = new UMFuturesClientImpl(apiKey, secretKey);
+    }
+
+    public String getBaseUrl() {
+        return client.getBaseUrl();
+    }
+
+    public String getApiKey() {
+        return client.getApiKey();
+    }
+
+    public String getSecretKey() {
+        return client.getSecretKey();
+    }
+
+    public String getProductUrl() {
+        return client.getProductUrl();
     }
 
     public Failable<SetPositionModeResponse, String> setPositionMode(SetPositionModeRequest request) {
@@ -40,7 +57,7 @@ public class Client extends UMFuturesClientImpl {
         parameters.put("dualSidePosition", request.getDualSidePosition());
 
         try {
-            return Failable.success(gson.fromJson(this.account().changePositionModeTrade(parameters), SetPositionModeResponse.class));
+            return Failable.success(gson.fromJson(client.account().changePositionModeTrade(parameters), SetPositionModeResponse.class));
         } catch (BinanceServerException | BinanceConnectorException | BinanceClientException e) {
             return Failable.error(e.getMessage());
         }
@@ -57,7 +74,7 @@ public class Client extends UMFuturesClientImpl {
         parameters.put("timestamp", System.currentTimeMillis());
 
         try {
-            return Failable.success(gson.fromJson(this.account().changeMarginType(parameters), SetMarginTypeResponse.class));
+            return Failable.success(gson.fromJson(client.account().changeMarginType(parameters), SetMarginTypeResponse.class));
         } catch (BinanceServerException | BinanceConnectorException | BinanceClientException e) {
             return Failable.error(e.getMessage());
         }
@@ -74,7 +91,7 @@ public class Client extends UMFuturesClientImpl {
         parameters.put("timestamp", System.currentTimeMillis());
 
         try {
-            return Failable.success(gson.fromJson(this.account().changeInitialLeverage(parameters), SetLeverageResponse.class));
+            return Failable.success(gson.fromJson(client.account().changeInitialLeverage(parameters), SetLeverageResponse.class));
         } catch (BinanceServerException | BinanceConnectorException | BinanceClientException e) {
             return Failable.error(e.getMessage());
         }
@@ -89,7 +106,7 @@ public class Client extends UMFuturesClientImpl {
         parameters.put("timestamp", System.currentTimeMillis());
 
         try {
-            return Failable.success(gson.fromJson(this.account().accountInformation(parameters), AccountInformationResponse.class));
+            return Failable.success(gson.fromJson(client.account().accountInformation(parameters), AccountInformationResponse.class));
         } catch (BinanceConnectorException | BinanceClientException | BinanceServerException e) {
             return Failable.error(e.getMessage());
         }
@@ -156,7 +173,7 @@ public class Client extends UMFuturesClientImpl {
         parameters.put("timestamp", System.currentTimeMillis());
 
         try {
-            return Failable.success(gson.fromJson(this.account().newOrder(parameters), NewOrderResponse.class));
+            return Failable.success(gson.fromJson(client.account().newOrder(parameters), NewOrderResponse.class));
         } catch (BinanceConnectorException | BinanceClientException | BinanceServerException e) {
             return Failable.error(e.getMessage());
         }
@@ -178,7 +195,7 @@ public class Client extends UMFuturesClientImpl {
         parameters.put("timestamp", System.currentTimeMillis());
 
         try {
-            return Failable.success(gson.fromJson(this.account().queryOrder(parameters), GetOrderResponse.class));
+            return Failable.success(gson.fromJson(client.account().queryOrder(parameters), GetOrderResponse.class));
         } catch (BinanceConnectorException | BinanceClientException | BinanceServerException e) {
             return Failable.error(e.getMessage());
         }
@@ -206,7 +223,7 @@ public class Client extends UMFuturesClientImpl {
         parameters.put("timestamp", System.currentTimeMillis());
 
         try {
-            GetOrderAllResponse[] response = gson.fromJson(this.account().allOrders(parameters), GetOrderAllResponse[].class);
+            GetOrderAllResponse[] response = gson.fromJson(client.account().allOrders(parameters), GetOrderAllResponse[].class);
 
             return Failable.success(Arrays.stream(response).toList());
         } catch (BinanceConnectorException | BinanceClientException | BinanceServerException e) {
