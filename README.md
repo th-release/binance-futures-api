@@ -59,4 +59,4 @@ public class Main {
 ```
 
 ## 문서 참고
-https://developers.binance.com/docs/derivatives/quick-start
+https://developers.binance.com/docs/derivatives/usds-margined-futures/general-info
