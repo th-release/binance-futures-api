@@ -34,6 +34,16 @@ git clone https://github.com/th-release/binance-futures-api.git
 cd binance-futures-api
 ```
 
+### 중요: 
+`binance-futures-api/src/main/java/com/binance
+/utils/`에서 파일을 가져가주세요.
+```gradle
+    implementation "io.github.binance:binance-futures-connector-java:3.0.4"
+    implementation 'com.google.code.gson:gson:2.10.1'
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+```
+해당 패키지를 모두 설치해주세요.
+
 ## 사용 방법
 
 ```java
